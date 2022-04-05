@@ -16,6 +16,6 @@ public class Account {
     private BigDecimal balance = BigDecimal.valueOf(0);
 
     public BigDecimal getBalance() {
-        return balance+2;
+        return balance;
     }
 }

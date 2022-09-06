@@ -29,7 +29,7 @@ public class BankAccountController implements ApplicationListener<ApplicationRea
 
     @PostMapping(path = "/account", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Account> updateAccount(@RequestBody Account a) {
-        bankService.updateAccount(a);
+        bankService.updateAccount(a)
         return new ResponseEntity<>(a, HttpStatus.OK);
     }
 

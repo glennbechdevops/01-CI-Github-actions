@@ -33,7 +33,7 @@ public class BankAccountController implements ApplicationListener<ApplicationRea
         return new ResponseEntity<>(a, HttpStatus.OK);
     }
 
-    @GetMapping(path = "/account/{accountId}", consumes = "application/json", produces = "application/json")
+    @GetMapping(path = "/account/{accountId}",  = "application/json", produces = "application/json")
     public ResponseEntity<Account> balance(@PathVariable String accountId) {
         Account account = ofNullable(bankService.getAccount(accountId)).orElseThrow(AccountNotFoundException::new);
         return new ResponseEntity<>(account, HttpStatus.OK);

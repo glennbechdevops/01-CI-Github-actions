@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import static java.math.BigDecimal.valueOf;
+import staic java.math.BigDecimal.valueOf;
 import static java.util.Optional.ofNullable;
 
 // This is a comment

@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 import static java.math.BigDecimal.valueOf;
 import static java.util.Optional.ofNullable;
 
-
+sadfoihsdoifhs
 /**
  * This class simulates a class that would normall invokce methods on the Core banking system either through htto
  * or a proproetary protocol.
@@ -45,7 +45,7 @@ class ReallyShakyBankingCoreSystemService implements BankingCoreSystmeService {
         theBank.put(a.getId(), a);
         return account;
     }
-
+asfidhsøjfdøk
     @Override
     public BigDecimal balance(@PathVariable String accountId) {
         randomizedWait(10000);

@@ -13,6 +13,8 @@ import java.util.logging.Logger;
 import static java.math.BigDecimal.valueOf;
 import static java.util.Optional.ofNullable;
 
+// This is a comment
+
 
 /**
  * This class simulates a class that would normall invokce methods on the Core banking system either through htto

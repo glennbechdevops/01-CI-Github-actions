@@ -1,19 +1,19 @@
 
-# LAB - CI med GitHub actions 
+# LAB - CI with GitHub actions 
 
-## Litt om eksempel-appen
+## A bit about the example app
 
-En norsk bank har brukt flere år og hundretalls milioner på å utvikle et moderne kjernesystem for bank og et "fremoverlent" API som nesten tilfredsstiller Directive (EU) 2015/2366 of the European Parliament and of the Council on Payment Services in the Internal Market, published 25 November 2016 også kjent som PSD.
+A Norwegian bank has spent several years and hundreds of millions developing a modern core system for banking and a "forward-leaning" API that almost satisfies Directive (EU) 2015/2366 of the European Parliament and of the Council on Payment Services in the Internal Market, published 25 November 2016 also known as PSD.
 
-Dette er en viktig satsning innen området "Open Banking" for SkalBank.
+This is an important investment in the area of ​​"Open Banking" for SkalBank.
 
-Arkitekturmessig består systemet av to komponenter.
+Architecturally, the system consists of two components.
 
-Et API, implementert ved hjelp av Spring Boot. Koden for applikasjonen ligger i dette repoet.
-Et kjernesystem som utfører transaksjoner med andre banker, avregner mot Norges bank osv. Dere kan late som metodekall 
-som gjøres mot klassen ```ReallyShakyBankingCoreSystemService```, kommuniserer med dette systemet.
+An API, implemented using Spring Boot. The code for the application is located in this repo.
+A core system that carries out transactions with other banks, settles against Norges Bank, etc. You can pretend to be method calls
+which is done against the ```ReallyShakyBankingCoreSystemService''' class, communicates with this system.
 
-I denne øvingen skal vi se på viktige DevOps prinsipper som 
+In this exercise, we will look at important DevOps principles such as
 
 - GitHub actions
 - Trunk based development 
@@ -21,102 +21,102 @@ I denne øvingen skal vi se på viktige DevOps prinsipper som
 - Branch protection 
 - Pull requests
 
-Dere blir også kjent med Cloud 9 utviklingsmiljøet dere skal bruke videre. 
+You will also get to know the Cloud 9 development environment you will use further. 
 
-## Før dere starter
+## Before you start
 
-- Dere trenger en GitHub Konto
-- Lag en fork av dette repositoriet inn i egen GitHub konto
+- You need a GitHub account
+- Create a fork of this repository into your own GitHub account
 
 ![Alt text](img/fork.png  "a title")
 
-### Sjekk ut Cloud 9 miljøet ditt i AWS og bli kjent med det
+### Check out your Cloud 9 environment in AWS and get to know it
 
 ```text
-OBS! Cloud 9 lagrer ikke dokumenter automatisk! Du må selv gjøre ctrl+s i editoren etter du har gjort
-emdringer.
+ATTENTION! Cloud 9 does not save documents automatically! You have to do ctrl+s in the editor yourself after you have done
+amendments.
 ```
 
-* URL for innlogging er https://244530008913.signin.aws.amazon.com/console
-* Brukernavnet og passordet er gitt i klasserommet
+* URL for login is https://244530008913.signin.aws.amazon.com/console
+* The username and password are given in the classroom
 
-* Fra hovedmenyen, søk etter tjenesten "cloud9"
+* From the main menu, search for the service "cloud9"
 
 ![Alt text](img/11.png  "a title")
 
-* Velg "your environments" fra venstremenyen hvis du ikke ser noen miljøer med ditt navn
-* Hvis du ikke ser noe å trykke på som har ditt navn, pass på at du er i rett region (gitt i klasserommet)
-* Velg "Open IDE"
+* Select "your environments" from the left menu if you do not see any environments with your name
+* If you don't see something to press that has your name on it, make sure you're in the right region (provided in the classroom)
+* Select "Open IDE"
 
-Du må nå vente litt mens Cloud 9 starter
+You now have to wait a bit while Cloud 9 starts
 @
 
-* Hvis du velger "9" ikonet på øverst til venstre i hovedmenyen vil du se "AWS Explorer". Naviger gjerne litt rundt I AWS Miljøet for å bli kjent.
-* Blir kjent med IDE, naviger rundt.
+* If you select the "9" icon on the top left of the main menu you will see "AWS Explorer". Feel free to navigate around the AWS environment to get familiar.
+* Get to know the IDE, navigate around.
 
 ![Alt text](img/cloud9.png  "a title")
 
-Start en ny terminal i Cloud 9 ved å trykke (+) symbolet på tabbene
+Start a new terminal in Cloud 9 by pressing the (+) symbol on the tabs
 ![Alt text](img/newtab.png  "a title")
 
-Kjør denne kommandoen for å verifisere at Java 11 er installert
+Run this command to verify that Java 11 is installed
 
 ```shell
 java -version
 ```
-Du skal få 
+You will get 
 ```
 openjdk 11.0.14.1 2022-02-08 LTS
 OpenJDK Runtime Environment Corretto-11.0.14.10.1 (build 11.0.14.1+10-LTS)
 OpenJDK 64-Bit Server VM Corretto-11.0.14.10.1 (build 11.0.14.1+10-LTS, mixed mode)
 ```
 
-### Installer Maven i Cloud 9 
+### Install Maven in Cloud 9 
 
-Kopier disse kommandoene inn i Cloud9 terminalen. De vil installere Maven. 
+Copy these commands into the Cloud9 terminal. They will install Maven. 
 ```shell
 sudo wget http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-maven.repo -O /etc/yum.repos.d/epel-apache-maven.repo
 sudo sed -i s/\$releasever/6/g /etc/yum.repos.d/epel-apache-maven.repo
 sudo yum install -y apache-maven
 ```
 
-### Lag et Access Token for GitHub
+### Create an Access Token for GitHub
 
-Når du skal autentisere deg mot din GitHub konto fra Cloud 9 trenger du et access token.  Gå til  https://github.com/settings/tokens og lag et nytt. 
+When you need to authenticate against your GitHub account from Cloud 9, you need an access token. Go to https://github.com/settings/tokens and create a new one. 
 
 ![Alt text](img/generate.png  "a title")
 
-Access token må ha "repo" tillatelser, og "workflow" tillatelser.
+The access token must have "repo" permissions, and "workflow" permissions.
 
 ![Alt text](img/new_token.png  "a title")
 
-### Lage en klone av din Fork (av dette repoet) inn i ditt Cloud 9 miljø
+### Create a clone of your Fork (of this repo) into your Cloud 9 environment
 
-For å slippe å autentisere seg hele tiden kan man få git til å cache nøkler i et valgfritt 
-antall sekunder. 
+To avoid having to authenticate yourself all the time, you can make git cache keys in an optional
+number of seconds. 
 
-* OBS! Anta at det er mulig for kollegaer å få tilgang til ditt Cloud 9 miljø.   
+* ATTENTION! Assume that it is possible for colleagues to gain access to your Cloud 9 environment.   
 
 ```shell
 git config --global credential.helper "cache --timeout=86400"
 ```
 
-Lag en klone
+Create a clone
 
 ```shell
 git clone https://github.com/≤github bruker>/01-CI-Github-actions.git
 ```
 
-* Forsøk å kjøre applikasjonen 
+* Try to run the application 
 ```shell
 cd 01-CI-Github-actions
 mvn spring-boot:run
 ```
 
-Start en ny terminal i Cloud 9 ved å trykke (+) symbolet på tabbene
+Start a new terminal in Cloud 9 by pressing the (+) symbol on the tabs
 ![Alt text](img/newtab.png  "a title")
 
-Du kan teste applikasjonen med CURL fra Cloud 9
+You can test the application with CURL from Cloud 9
 
 ```
 curl -X POST \
@@ -129,7 +129,7 @@ http://localhost:8080/account/1/transfer/2 \
 }'
 ```
 
-Husk at dette er applikasjonen "Shakybank", en 500 Internal server error er svært vanlig :-)
+Remember that this is the application "Shakybank", a 500 Internal server error is very common :-)
 ```json
 {
   "timestamp": "2022-04-04T21:34:45.542+00:00",
@@ -139,12 +139,12 @@ Husk at dette er applikasjonen "Shakybank", en 500 Internal server error er svæ
   "path": "/account/1/transfer/2"
 }
 ```
-Når du ikke får noe output fra terminalen etter CURL kommandoen har requesten gått bra. 
+When you get no output from the terminal after the CURL command, the request has gone well. 
 
-## Lag en GitHub Actions workflow
-Bruk  Cloud 9 til å lage to mapper og en fil som heter ````.github/workflows/main.yml```` under rotmappen til repositoriet du har klonet.
+## Create a GitHub Actions workflow
+Use Cloud 9 to create two folders and a file called ````.github/workflows/main.yml```` under the root folder of the repository you cloned.
 NB!
-Husk å trykke ctrl+s etter du har laget denne filen i cloud 9, hvis ikke vil du sjekke inn en tom fil, og din workflow vil ikke fungere
+Remember to press ctrl+s after you have created this file in cloud 9, otherwise you will check in an empty file and your workflow will not work
 ```yaml
 # This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
 # For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
@@ -168,12 +168,12 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 ```
-* OBS! Hvis du senere ikke finner igjen denne filen, er det fordi Cloud 9 default skjuler filer og mapper som begynner på ". Hvis det skjer, velg "tannhjulet" øverst til høyre i fil-explorer, og velg "show hidden files"
+* ATTENTION! If you later can't find this file again, it's because Cloud 9 by default hides files and folders starting with ". If that happens, select the "cogwheel" at the top right of the file explorer, and select "show hidden files"
 
-* Dette er en vekdig enkel *workflow* med en *job* som har en rekke *steps*. Koden sjekkes ut. JDK11 konfigureres,
-Maven lager en installasjonspakke.
+* This is a very simple *workflow* with a *job* that has a number of *steps*. The code is checked out. JDK11 is configured,
+Maven creates an installation package.
 
-Commit og push til ditt repo. 
+Commit and push to your repo. 
 
 ```shell
 cd 01-CI-Github-actions
@@ -182,47 +182,47 @@ git commit -m"workflow"
 git push
 ```
 
-*OBS*
-Når du gjør en ```git push``` må du autentisere deg. Du må bruke et GitHub Access token når du blir bedt om passord.
+*NOTE*
+When you do a ```git push''' you must authenticate yourself. You must use a GitHub Access token when prompted for a password.
 
-## Sjekk at workflow er aktivert 
+## Check that workflow is activated
 
-* Gå til din fork av dette repoet på Github 
-* Velg "Actions" - du skal se at en jobb er kjørt.
+* Go to your fork of this repo on Github
+* Select "Actions" - you should see that a job has been run.
 
 * ![Alt text](img/workflow.png  "a title")
 
-Gjør en endring i koden, gjerne i main branch, commit og push. Observer mens commit hendelsen starter WorkFlowen, og jobben kjører.
+Make a change in the code, preferably in the main branch, commit and push. Observe while the commit event starts the WorkFlow, and the job runs.
 
-## Konfigurer main som beskyttet branch
+## Configure main as protected branch
 
 ![Alt text](img/branches.png  "a title")
 
-Vi skal nå sørge for at bare kode som kompilerer og med tester som kjører, inn i main branch.
-Det er også bra praksis å ikke comitte kode direkte på main, så vi skal gjøre det umulig å gjøre dette. 
+We will now ensure that only code that compiles and with tests that run enters the main branch.
+It is also good practice not to commit code directly on main, so we will make it impossible to do this.
 
-Ved å konfigurerere main som en beskyttet branch, og ved å bruke "status sjekker" kan vi 
-- Gåt til din fork av dette repoet.  
-- Gå til Settings/Branches og Se etter seksjonen "Branch Protection Rules".
-- Velg *Add*
-- Velg *main* Som branch
-- Velg ```require a pull request before merging```
-- Velg ````Require status check to pass before merging````
-- I søkefeltet skriv inn teksten *build* som skal la deg velge "GitHub Actions". 
+By configuring main as a protected branch, and by using "status checks" we can 
+- Moved to your fork of this repo.
+- Go to Settings/Branches and Look for the "Branch Protection Rules" section.
+- Select *Add*
+- Select *main* as branch
+- Select ```require a pull request before merging```
+- Select ````Require status check to pass before merging````
+- In the search field enter the text *build* which should let you select "GitHub Actions". 
 
-* Nå kan vi ikke Merge en pull request inn i Main uten at status sjekken er i orden. Det betyr at vår Workflow har kjørt OK. 
-* Ingen i teamet kan heller "snike seg unna" denne sjekken ved å comitte kode rett på main branch.
-* En bra start!
+* Now we cannot merge a pull request into Main without the status check being OK. It means that our Workflow has run OK. 
+* Nor can anyone in the team "sneak away" from this check by committing code directly to the main branch.
+* A good start!
 
-## Test å brekke koden 
+## Test to break the code 
 
-- Lag en ny branch 
+- Create a new branch 
 
 ```
 git checkout -b will_break_4_sure
 ```
-- Lag en kompileringsfeil
-- Commit og push endringen til GitHub 
+- Make a compile error
+- Commit and push the change to GitHub 
 
 ```shell
  git add src/
@@ -230,36 +230,37 @@ git checkout -b will_break_4_sure
  git push --set-upstream origin will_break_4_sure
 ```
 
-- OBS! GitHub velger repository du lagde forken FRA som kilde når du lager en pull request første gang. Du må endre nedtrekksmenyen til ditt eget repo.
-- Gå til ditt repo på GitHub.com og forsøk å lage en Pull request fra din branch ```will_break_4_sure``` til main. 
-- Sjekk at du ikke får lov til å gjøre en Merge fordi koden ikke kompilerer
+- ATTENTION! GitHub selects the repository you made the fork FROM as the source when you make a pull request the first time. You need to change the dropdown to your own repo.
+- Go to your repo on GitHub.com and try to make a pull request from your branch ```will_break_4_sure``` to main. 
+- Check that you are not allowed to do a Merge because the code does not compile
+
 
 ## Peer review
 
-- Gå til gitHub.com og din fork av dette repoet.
-- Gå til Settings/Branches og Se etter seksjonen "Branch Protection Rules".
-- Velg *main* branch
-- Velg "Edit" for  eksisterende branch protection rule
+- Go to gitHub.com and your fork of this repo.
+- Go to Settings/Branches and Look for the "Branch Protection Rules" section.
+- Select *main* branch
+- Select "Edit" for the existing branch protection rule
 - Under ````Require a pull request before passing````
-- Kryss deretter av for ````Require approvals````
+- Then tick the box ````Require approvals````
 
 ## Test
 
 ![Alt text](img/addpeople.png  "a title")
  
-- Legg til en annen person som "collaborator" i ditt repo
-- Gå til Github og lag en ny Pull request, som vist over 
-- Få personen til å godkjenne din pull request
-- Forsøk gjerne å fremprovosere en feil ved å få en unit test til å feile. 
-- Legg merke til at det fortsatt er mulig å merge til ```main```.
+- Add another person as a "collaborator" in your repo
+- Go to Github and create a new Pull request, as shown above
+- Get the person to approve your pull request
+- Feel free to try to provoke an error by causing a unit test to fail. 
+- Note that it is still possible to merge ```main```.
 
 ## Bonus challenge 
 
-- Lag en feature branch fra main -lag mange commits på denne hvor du for eksempel bare fikser skrivefeil. 
-- Lag en PR mot main, der du "squasher" de unødvendige committene i en interaktive rebase ```git rebase -i origin/main``` 
+- Make a feature branch from main - make many commits on this where you only fix typos, for example. 
+- Create a PR against main, where you "squash" the unnecessary commits in an interactive rebase ```git rebase -i origin/main``` 
 
 ## Bonus challenge 2
 
-- Kan du finne noen åpne "actions" for Github som for eksempel sjekker kodekvalitet eller eventuelle sårbarheter i avhengigheter ?
+- Can you find any open "actions" for Github that, for example, check code quality or any vulnerabilities in dependencies?
 
-Ferdig!
+Finished!

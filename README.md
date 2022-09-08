@@ -1,4 +1,3 @@
-#Dummy commit
 # LAB - CI with GitHub actions 
 
 ## A bit about the example app

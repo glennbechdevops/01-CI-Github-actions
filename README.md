@@ -1,5 +1,7 @@
 # LAB - CI with GitHub actions 
 
+# Dummy
+
 ## A bit about the example app
 
 A Norwegian bank has spent several years and hundreds of millions developing a modern core system for banking and a "forward-leaning" API that almost satisfies Directive (EU) 2015/2366 of the European Parliament and of the Council on Payment Services in the Internal Market, published 25 November 2016 also known as PSD.

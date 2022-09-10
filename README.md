@@ -19,7 +19,7 @@ I denne øvingen skal vi se på viktige DevOps prinsipper som
 - Trunk based development 
 - Feature branches
 - Branch protection 
-- Pull requestssss
+- Pull requests
 
 Dere blir også kjent med Cloud 9 utviklingsmiljøet dere skal bruke videre. 
 

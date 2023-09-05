@@ -75,21 +75,9 @@ class ReallyShakyBankingCoreSystemService implements BankingCoreSystmeService {
     }
 
     private void randomizeExceptionOrPanic(double probability, double panicProbability) {
-        if (Math.random() <= probability) {
-            throw new BackEndException();
-        }
-        if (Math.random() <= panicProbability) {
-            System.exit(-1);
-        }
     }
 
 
     private void randomizedWait(double max) {
-        try {
-            long waitValue = (long) (max * Math.random());
-            Logger.getLogger(this.getClass().getName()).info("Waiitng for " + waitValue);
-            Thread.sleep(waitValue);
-        } catch (InterruptedException e) {
-        }
     }
 }

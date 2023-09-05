@@ -3,9 +3,9 @@
 name: Java CI with Maven
 on:
   push:
-    branches: [ main ]
+    branches: [ broken_branch ]
   pull_request:
-    branches: [ main, broken_branch ]
+    branches: [ broken_branch ]
 jobs:
   build:
     runs-on: ubuntu-latest

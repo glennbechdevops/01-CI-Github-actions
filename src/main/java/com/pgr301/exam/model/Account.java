@@ -10,6 +10,8 @@ import java.math.BigDecimal;
 @Data
 @RequiredArgsConstructor
 public class Account {
+    
+    //This is a class
 
     private String currency = "NOK";
     private String id;

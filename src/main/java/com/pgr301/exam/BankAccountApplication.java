@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 //Adding comment to test Github action workflow
 @SpringBootApplication
 public class BankAccountApplication {
-    public static void main(String[] args) {
+    public static void mainsd(String[] args) {
         SpringApplication.run(BankAccountApplication.class, args);
     }
 }

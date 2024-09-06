@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.math.BigDecimal;
-import java.util.HashMap
+import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 

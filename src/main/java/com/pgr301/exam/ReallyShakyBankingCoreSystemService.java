@@ -28,7 +28,7 @@ class ReallyShakyBankingCoreSystemService implements BankingCoreSystmeService {
     @Override
     public void transfer(Transaction tx, String fromAccount, String toAccount) {
         randomizedWait(2000);
-        randomizeExceptionOrPanic(0.7f);
+        randomizeExceptionOrPanic(0.0f);
         Account from = getOrCreateAccount(fromAccount);
         Account to = getOrCreateAccount(toAccount);
         from.setBalance(from.getBalance().subtract(valueOf(tx.getAmount())));
@@ -38,7 +38,7 @@ class ReallyShakyBankingCoreSystemService implements BankingCoreSystmeService {
     @Override
     public Account updateAccount(Account a) {
         randomizedWait(2000);
-        randomizeExceptionOrPanic(0.9f);
+        randomizeExceptionOrPanic(0.0f);
         Account account = getOrCreateAccount(a.getId());
         account.setBalance(a.getBalance());
         account.setCurrency(a.getCurrency());
@@ -49,7 +49,7 @@ class ReallyShakyBankingCoreSystemService implements BankingCoreSystmeService {
     @Override
     public BigDecimal balance(@PathVariable String accountId) {
         randomizedWait(10000);
-        randomizeExceptionOrPanic(0.2f);
+        randomizeExceptionOrPanic(0.0f);
         Account account = ofNullable(theBank.get(accountId)).orElseThrow(BankAccountController.AccountNotFoundException::new);
         return account.getBalance();
     }
@@ -57,7 +57,7 @@ class ReallyShakyBankingCoreSystemService implements BankingCoreSystmeService {
     @Override
     public Account getAccount(String accountNumber) {
         randomizedWait(5000);
-        randomizeExceptionOrPanic(0.9f, 0.5f);
+        randomizeExceptionOrPanic(0.0f, 0.0f);
         return getOrCreateAccount(accountNumber);
     }
 

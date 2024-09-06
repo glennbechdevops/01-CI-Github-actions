@@ -17,13 +17,13 @@ import static java.util.Optional.ofNullable;
 /**
  * This class simulates a class that would normall invokce methods on the Core banking system either through htto
  * or a proproetary protocol.
+ * Change to check
  * <p>
  */
 @Component
 class ReallyShakyBankingCoreSystemService implements BankingCoreSystmeService {
 
-    private Map<String, Account> theBank = new HashMap();
-
+    private Map<String, Account> theBank = new HashMap()
     @Override
     public void transfer(Transaction tx, String fromAccount, String toAccount) {
         randomizedWait(2000);

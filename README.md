@@ -263,11 +263,7 @@ git checkout -b will_break_4_sure
 - Forsøk gjerne å fremprovosere en feil ved å få en unit test til å feile. 
 - Legg merke til at det fortsatt er mulig å merge til ```main```.
 
-## Oppgave C
-
-Lag et eget repo,  i ditt GitHub repo - helt fra scratch, og konfigurer alle elementene fra denne øvingen.  
-
-## Oppgave 
+## Oppgave  
 
 - Lag en feature branch fra main -lag mange commits på denne hvor du for eksempel bare fikser skrivefeil. Lag deretter en pull requrst mot main branch, der du "squasher/fixup" de unødvendige committene i en interaktive rebase ```git rebase -i origin/main``` 
 
@@ -276,4 +272,9 @@ Lag et eget repo,  i ditt GitHub repo - helt fra scratch, og konfigurer alle ele
 - Kan du finne noen åpne "actions" for Github som for eksempel sjekker kodekvalitet eller eventuelle sårbarheter i avhengigheter ?
 - Dykk mer selv i GitHub Actions
 
-Ferdig!
+## Oppgave
+
+Lag et eget repo,  i ditt GitHub repo - helt fra scratch, og konfigurer alle elementene fra denne øvingen.  
+
+
+

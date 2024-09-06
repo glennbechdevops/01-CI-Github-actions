@@ -263,7 +263,7 @@ git checkout -b will_break_4_sure
 - Forsøk gjerne å fremprovosere en feil ved å få en unit test til å feile. 
 - Legg merke til at det fortsatt er mulig å merge til ```main```.
 
-## Oppgave C
+## Oppgave 
 
 Lag et eget repo,  i ditt GitHub repo - helt fra scratch, og konfigurer alle elementene fra denne øvingen.  
 

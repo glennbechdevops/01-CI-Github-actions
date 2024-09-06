@@ -217,7 +217,12 @@ Ved å konfigurerere main som en beskyttet branch, og ved å bruke "status sjekk
 - Velg *main* Som branch
 - Velg ```require a pull request before merging```
 - Velg ````Require status check to pass before merging````
+<<<<<<< HEAD
+- Velg ```Do not allow bypassing the above settings```
+- I søkefeltet skriv inn teksten *build* som skal la deg velge "GitHub Actions". 
+=======
 - Trykk "+Add checks"- I søkefeltet skriv inn teksten *build* som skal la deg velge "GitHub Actions". 
+>>>>>>> origin/main
 
 * Nå kan vi ikke Merge en pull request inn i Main uten at status sjekken er i orden. Det betyr at vår Workflow har kjørt OK. 
 * Ingen i teamet kan nå "snike seg unna" denne sjekken ved å comitte kode rett på main branch, selv ikke admin
@@ -239,7 +244,11 @@ git checkout -b will_break_4_sure
  git push --set-upstream origin will_break_4_sure
 ```
 
+<<<<<<< HEAD
+- OBS! GitHub velger repository du lagde forken FRA som kilde når du lager en pull request første gang. Du må endre nedtrekksmenyen til ditt eget repo.
+=======
 - OBS! Default, så  vil GitHub velger repository du lagde forken FRA som kilde når du lager en pull request første gang. Det blir feil, fordi det ikke er ditt repository. Du må derfor endre dette i nedtrekksmenyen, til ditt eget repo.
+>>>>>>> origin/main
 - Gå til ditt repo på GitHub.com og forsøk å lage en Pull request fra din branch ```will_break_4_sure``` til main. 
 - Sjekk at du ikke får lov til å gjøre en Merge fordi koden ikke kompilerer
 

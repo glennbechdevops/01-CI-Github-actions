@@ -4,6 +4,7 @@ import com.pgr301.exam.model.Account;
 import com.pgr301.exam.model.Transaction;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
+import com.pgr301.exam.BankAccountController.AccountNotFoundException;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -33,6 +34,8 @@ class ReallyShakyBankingCoreSystemService implements BankingCoreSystmeService {
         Account to = getOrCreateAccount(toAccount);
         from.setBalance(from.getBalance().subtract(valueOf(tx.getAmount())));
         to.setBalance(to.getBalance().add(valueOf(tx.getAmount())));
+        System.out.println("We did it");
+        
     }
 
     @Override
@@ -71,7 +74,7 @@ class ReallyShakyBankingCoreSystemService implements BankingCoreSystmeService {
     }
 
     private void randomizeExceptionOrPanic(double probability) {
-        randomizeExceptionOrPanic(probability, 0.2d);
+        randomizeExceptionOrPanic(0.01d, 0.01d);
     }
 
     private void randomizeExceptionOrPanic(double probability, double panicProbability) {

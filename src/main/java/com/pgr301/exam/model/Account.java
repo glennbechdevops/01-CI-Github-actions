@@ -18,4 +18,20 @@ public class Account {
     public BigDecimal getBalance() {
         return balance;
     }
+    
+    public void setBalance(BigDecimal value){
+        balance = value;
+    }
+    
+    public String getCurrency(){
+        return currency;
+    }
+    
+    public void setCurrency(String value){
+        currency = value;
+    }
+    
+    public void setId(String newId){
+        id = newId;
+    }
 }
